@@ -10,7 +10,7 @@ const requestOptions: any = {
    redirect: 'follow'
 };
 
-const countriesandcity = await fetch("https://api.countrystatecity.in/v1/countries", requestOptions)
+const countriesandcity = fetch("https://api.countrystatecity.in/v1/countries", requestOptions)
   .then(response => response.json())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
