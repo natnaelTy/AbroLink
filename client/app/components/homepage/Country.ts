@@ -1,8 +1,9 @@
+import dotenv from 'dotenv';
 
-
+dotenv.config();
 
 const headers = new Headers();
-headers.append("X-CSCAPI-KEY", "T1M3YkFYem1jemdGTzJCY0dHRU5OZ3hkMWYySEM1ZlhvNWZRYm5BQg==");
+headers.append("X-CSCAPI-KEY", process.env.COUNTRY_API_KEY || 'T1M3');
 
 const requestOptions: any = {
    method: 'GET',
