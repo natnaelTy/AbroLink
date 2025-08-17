@@ -11,12 +11,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import countriesandcity from "./Country";
+import { useEffect, useState } from "react";
+import { getCountries } from "@/lib/Country";
 
 export default function Search() {
+  const [countries, setCountries] = useState<any[]>([]);
 
-  const country = countriesandcity.map((country: { name: string }) => country.name);
-  console.log(country);
+  useEffect(() => {
+    getCountries().then(setCountries);
+  }, []);
+
+  console.log(countries.map((country) => country.emoji));
 
   return (
     <section className="flex items-center justify-center flex-col gap-4 mx-auto w-full p-1 mt-4">
@@ -24,7 +29,7 @@ export default function Search() {
         Search for travelers
       </h1>
 
-      <form className="flex items-center flex-wrap justify-between gap-4 w-full max-w-[700px]">
+      <form className="flex items-center flex-wrap md:justify-center justify-start gap-6 w-full max-w-[700px]">
         <div className="flex items-center gap-2">
           <Label htmlFor="from">From :</Label>
           <Select>
@@ -32,31 +37,31 @@ export default function Search() {
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">{}</SelectItem>
-              <SelectItem value="dark">USA</SelectItem>
-              <SelectItem value="system">Germany</SelectItem>
+              {countries.map((country) => (
+                <SelectItem key={country.id} value={country.iso2}>
+                  {country.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
 
-        <div>
-          <PlaneTakeoff className="size-6 hidden md:block" />
-        </div>
-
         <div className="flex items-center gap-2">
-          <Label htmlFor="to">To :</Label>
+          <Label htmlFor="from">To :</Label>
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">China</SelectItem>
-              <SelectItem value="dark">Japan</SelectItem>
-              <SelectItem value="system">Italy</SelectItem>
+              {countries.map((country) => (
+                <SelectItem key={country.id} value={country.iso2}>
+                  {country.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
-        
+
         <button
           type="submit"
           className="bg-clip-bg bg-gradient-to-br from-amber-400 via-orange-500 to-orange-600 px-4 py-2.5 text-white font-medium rounded-full"
